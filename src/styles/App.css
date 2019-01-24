@@ -1,0 +1,87 @@
+.app-header{
+    background-color: #cb202d;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+}
+.app-title{
+    font-size: 24px;
+    font-style: italic;
+}
+.search-container{
+    display: flex;
+}
+.search-bar{
+    width: 26em;
+    height: 32px;
+    background-color: white;
+    border-radius: 4px;
+    text-align: center;
+    border: none;
+}
+.search-button{
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+}
+.content{
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 1fr;
+}
+.footer{
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    position: fixed;
+    height: 36px;
+    background-color: #cb202d;
+    width: 100%;
+}
+.nav-bar{
+    flex-basis: 15%;
+    background-color: #F3F3F3;
+    height: 497px;
+    display: flex;
+    flex-direction: column;
+}
+.nav-bar-button{
+    height: 2.5em;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin: 8px;
+    width: 19em;
+}
+.nav-bar-button:hover{
+    cursor: pointer;
+}
+.nav-bar a{
+    text-decoration: none;
+}
+.footer p{
+    padding-left: 3em;
+}
+.app-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 12px;
+    max-height: 400px;
+    overflow: auto;
+}
+.featured-img{
+    width: 350px;
+    height: 220px;
+}
+
+.app-content-header{
+    height: 48px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: #cb202d;
+    margin: 8px 0;
+}
