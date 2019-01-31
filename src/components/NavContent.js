@@ -4,9 +4,16 @@ class NavContent extends Component{
     render(){
         return(
             <div className="nav-bar">
-                <NavLink to="/"><button onClick={this.props.home} className="nav-bar-button">Home</button></NavLink>
-                <NavLink to="/user"><button className="nav-bar-button">Profile</button></NavLink>
-                <NavLink to="/bookings"><button className="nav-bar-button">My bookings</button></NavLink>
+                <NavLink to="/" activeClassName="activeLink" exact>
+                    <button onClick={this.props.home} className="nav-bar-button">
+                    <i  onClick={this.props.home} className="fa fa-home"></i> Home</button>
+                </NavLink>
+                <NavLink to="/user" activeClassName="activeLink" exact>
+                    <button className="nav-bar-button">
+                    <i className="fa fa-user"></i>  Profile</button></NavLink>
+                <NavLink to="/bookings" activeClassName="activeLink" exact>
+                    <button className="nav-bar-button">
+                    <i className="fa fa-book"></i>   My bookings</button></NavLink>
             </div>
         )
     }

@@ -9,7 +9,7 @@ class AppContent extends Component{
                     <h1>{this.props.title}</h1>
                 </div>
                 <div className="app-content">
-                    {this.props.trending.map((rest,index) => <Restaurant rest={rest} key={index}/>)}
+                    {this.props.trending.map((rest,index) => <Restaurant rest={rest} key={index} bookHandle={this.props.bookHandle}/>)}
                 </div>
             </div>
         )

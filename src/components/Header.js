@@ -8,11 +8,18 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 //import MenuIcon from '@material-ui/icons/Menu';
+import {NavLink} from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
+import { Button } from '@material-ui/core';
+
+import firebase from 'firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+
 
 const styles = theme => ({
   root: {
     width: '100%',
+    minHeight : "48px"
   },
   grow: {
     flexGrow: 1,
@@ -74,8 +81,15 @@ class Header extends React.Component{
     constructor(props){
         super(props)
         this.state ={
-            searchText : ""
+            searchText : "",
+            isLoggedIn : this.props.isLoggedIn
         }
+      }
+    
+    signOutBtn = {
+      backgroundColor: "white",
+      margin: "12px",
+      height: "36px"
     }
 
     handleSearch = (event) =>(this.setState({searchText : event.target.value}))
@@ -85,25 +99,24 @@ class Header extends React.Component{
        this.props.handleSearch(this.state.searchText);
        this.setState({searchText : ""})
     }
-
+    componentDidMount(){
+  
+    }
     render(){
     const { classes } = this.props;
     return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: "#cb202d"}}>
         <Toolbar>
-          {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-            <MenuIcon />
-          </IconButton> */}
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            {this.props.title}
+            <NavLink to="/">{this.props.title}</NavLink>
           </Typography>
           <div className={classes.grow} />
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <form onSubmit={this.handleSubmit}>
+            <form className="search" onSubmit={this.handleSubmit}>
             <InputBase
             value={this.state.searchText}
               placeholder="Search…"
@@ -115,7 +128,19 @@ class Header extends React.Component{
             />
             </form>
           </div>
+          <div style={{height : '32'}}>
+          {this.props.isLoggedIn ? 
+          <Button  style={this.signOutBtn} onClick={this.props.signOut}>Sign out</Button>
+          :
+          <StyledFirebaseAuth
+          uiConfig={this.props.uiConfig}
+          firebaseAuth={firebase.auth()}
+          />
+          }
+          </div>    
+       
         </Toolbar>
+        
       </AppBar>
     </div>
   );

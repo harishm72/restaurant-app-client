@@ -1,9 +1,13 @@
 .app-header{
     background-color: #cb202d;
-    height: 60px;
+    max-height: 48px;
     display: flex;
     justify-content: space-around;
     align-items: center; 
+}
+a{
+    text-decoration: none;
+    color: unset;
 }
 .app-title{
     font-size: 24px;
@@ -27,7 +31,7 @@
 }
 .content{
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 15% 85%;
     grid-template-rows: 1fr;
 }
 .footer{
@@ -39,21 +43,26 @@
     background-color: #cb202d;
     width: 100%;
 }
+.MuiTypography-paragraph-77{
+    padding: 0;
+    margin: 0;
+}
 .nav-bar{
-    flex-basis: 15%;
-    background-color: #F3F3F3;
+    flex-basis: 10%;
+    /* background-color: #F3F3F3; */
     height: 497px;
     display: flex;
     flex-direction: column;
 }
 .nav-bar-button{
     height: 2.5em;
-    background-color: black;
-    color: white;
+    color: black;
     border: none;
     border-radius: 4px;
     margin: 8px;
-    width: 19em;
+    width: 93%;
+    font-size: 16px;
+    text-align: left;
 }
 .nav-bar-button:hover{
     cursor: pointer;
@@ -68,7 +77,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 12px;
-    max-height: 400px;
+    max-height: 425px;
     overflow: auto;
 }
 .featured-img{
@@ -77,11 +86,132 @@
 }
 
 .app-content-header{
-    height: 48px;
-    font-size: 24px;
+    height: 32px;
+    font-size: 30px;
     display: flex;
     align-items: center;
+    margin: 8px;
+}
+.profile-header{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em;
+}
+.edit-profile{
+    display: flex;
+    flex-direction: column;
+    width: 48em;
+    margin: auto;
+}
+.user-avatar{
+    width: 10%;
+    align-self: center;
+    margin: 0.5em;
+    border-radius: 50%;
+}
+.user-name{
+    align-self: center;
+    margin: 0.25em;
+    font-size: 1.5em;
+}
+.edit-profile-btn{
+    position: absolute;
+    background-color: black;
     color: white;
-    background-color: #cb202d;
+    border: none;
+    border-radius: 4px;
+    width: 8em;
+    height: 2em;
+}
+.rest-city, .rest-locality{
+    font-size: x-large;
+    margin: 0;
+}
+.book-table{
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 4px;
+    height: 2em;
+}
+.book-table:hover{
+    cursor: pointer;
+}
+.card-bottom{
+    display: flex;
+    justify-content: space-between;
+    margin: 16px;
+}
+.rest-rating{
+    align-self: center;
+    border-radius: 66px;
+    padding: 8px;
+}
+.book-table-card{
+    margin: 8px 32%;
+    overflow: auto;
+}
+.book-table-form{
+    display: flex;
+    justify-content: space-around;
     margin: 8px 0;
+}
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+.flex-col select, .date-select{
+    border: 2px solid;
+    border-color: skyblue;
+    margin: 4px 0;
+    border-radius: 4px;
+    background-color: transparent
+}
+.flex{
+    display: flex;
+}
+.h3{
+    font-size: 20px;
+    margin: 8px 24px;
+}
+.booking-confirm{
+    background-color: skyblue;
+    border: none;
+    border-radius: 4px;
+    height: 24px;
+    margin: 0 144px;
+}
+.booking-item{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 8px;
+    align-items: center;
+    margin: 1em;
+    box-shadow: 2px 5px 0 2px rgba(0,0,0,0.09);
+    border-radius: 4px;
+}
+.booking-item-image{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%
+}
+.booking-item-name{
+    font-size: x-large;
+}
+.bookings-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 510px;
+    overflow: auto;
+}
+.cancel-booking{
+    background-color: black;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    height: 24px;
+}
+.activeLink{
+    background-color: black;
+    color: white;
 }
