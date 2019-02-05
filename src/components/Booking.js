@@ -12,6 +12,7 @@ class Booking extends React.Component {
             RestAPI.getBookings(this.props.email)
             .then(res => res.json())
             .then(allBookings => this.setState({bookings : allBookings}))
+            .catch(err => window.location.href = "/")
         }
     render(){
         if(this.state.bookings){ 
@@ -58,8 +59,8 @@ class Booked extends React.Component{
                         {this.props.rest.guests}
                     </div>
                     <div>
-                        <p>{this.props.rest.date}</p>
-                        <p>{this.props.rest.session}</p>
+                        <p>Date : {this.props.rest.date}</p>
+                        <p>Time :{this.props.rest.session}</p>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import RestAPI from './RestAPI';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import Snackbar from './Snackbar';
 class Profile extends React.Component{
     constructor(props){
         super(props)
@@ -12,6 +13,7 @@ class Profile extends React.Component{
             email : "",
             phoneNumber : "",
             paymentMode : "",
+            Snackbar : false
         }
     }
     componentDidMount = () =>{
@@ -25,10 +27,14 @@ class Profile extends React.Component{
         })
     }
     handleChange = event =>  this.setState({[event.target.name] : event.target.value})
-    
+    handleSnackClose = () => {
+        this.setState({Snackbar : false})
+    }
     formSubmit = (event) => {
         event.preventDefault();
+        this.setState({Snackbar : true})
         RestAPI.updateProfile(this.state.email, this.state)
+        .then(res => res)
     }
     render(){
         const classes = theme => ({
@@ -48,7 +54,11 @@ class Profile extends React.Component{
               width: 200,
             },
           });
-
+          if(!this.props.user){
+              return <div>
+                  {window.location.href = "/"}
+              </div>
+          }
         return <div className="user-profile">
                     <div className="profile-header">
                         <img className="user-avatar" src={this.props.user.photoURL} alt=""></img>
@@ -87,6 +97,9 @@ class Profile extends React.Component{
                             <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                 Save
                             </Button>
+                            <Snackbar handleSnackClose={this.handleSnackClose}
+                                        show={this.state.Snackbar} 
+                                        message={"Your Profile is updated..."}/> 
         </form>
                 <p></p>
         </div>

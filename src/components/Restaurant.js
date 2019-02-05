@@ -51,12 +51,15 @@ class Restaurant extends React.Component {
     const { classes } = this.props;
     return (
       <Card className={classes.card}>
+         <NavLink to={{pathname: `/restaurants?book`}}>
+        <div onClick={this.handleClick}>
         <CardMedia
           className={classes.media}
           image={this.props.rest.featured_image}
-          title={this.props.rest.name}
           src="./fallback.jpeg"
         />
+        </div>
+        </NavLink>
          <CardHeader style={{padding: '0 16px'}}
           title={this.props.rest.name}
         />

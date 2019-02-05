@@ -15,15 +15,19 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import Grid from '@material-ui/core/Grid';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import  Snackbar from './Snackbar';
 const styles = theme => ({
 
   grid: {
     flexWrap: "nowrap",
     width: "unset",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    color: 'white'
   },
   card: {
-    maxWidth: 400,
+    margin: '0px',
+    maxHeight: '495px',
+    overflow: 'auto'
   },
   bookTable : {
     color: 'white',
@@ -61,23 +65,26 @@ class BookTable extends React.Component {
         this.state = {
             rest : "",
             bookform : {display : "flex"},
-            selectedDate: Date(),
+            selectedDate: new Date(),
             guests : "2 guests",
-            session : Date(),
+            session : new Date(),
             age: '',
            open: false,
+           Snackbar : false
         }
     }
   handleConfirm = () => {
       this.setState({bookform : {display : "none"}})
+      let date = this.state.selectedDate 
+      let time = this.state.selectedDate 
       let post = {
-          date : this.state.selectedDate.toLocaleDateString(),
+          date : date.toLocaleDateString(),
           guests : this.state.guests,
-          session : this.state.session.toLocaleTimeString(),
+          session : time.toLocaleTimeString(),
           id : this.props.rest._id,
       }
       RestAPI.bookTable(this.props.email, post)
-      .then(res=> alert("Confirmed your booking!!!!!"))
+      this.setState({Snackbar : true})
   }
   handleChange = (event) =>{
       this.setState({ [event.target.name] : event.target.value})
@@ -97,33 +104,44 @@ class BookTable extends React.Component {
   handleOpen = () => {
     this.setState({ open: true });
   };
+  handleSnackClose = () => {
+    this.setState({ Snackbar: false });
+  }
   render() {
     const { classes, rest } = this.props;
     return (
       <Card className={`book-table-card ${classes.card}`}>
-       <CardHeader style={{padding: '0 16px'}}
-          title={rest.name}
-        />
+       <div class="rest-detail-header">
+       <CardHeader  title={rest.name}/>
+        <div className="flex" style={{justifyContent : "space-between"}}>
+                <div>
+                  <p className="cuisines">Cuisines : {rest.cuisines}</p>
+                  <p className="place">{rest.location.locality} , {rest.location.city}</p>
+                </div>
+                <p className="rest-rating" 
+                    style={{backgroundColor : `#${rest.user_rating.rating_color}`,width: 'fit-content'}}>
+                    {rest['user_rating']['aggregate_rating']}</p>
+                   
+          </div>
+       </div>
+        <div className="rest-detail-page-image">
         <CardMedia
           className={classes.media}
           image={rest.featured_image}
           title={rest.name}
           onError={(e)=>{e.target.onerror = null; e.target.src="./fallback.jpeg"}}
         />
+        </div>
+        <div className="booking-container">
         <CardContent style={{padding : '8px 16px'}}>
            <Typography component="p">
-             {rest.cuisines}
+             
              </Typography>
            <Typography paragraph className="rest-locality" style={{margin: "0px"}}>
-             {rest.location.locality} , {rest.location.city}
          </Typography>
          </CardContent>
-         <div className="flex">
-                <p className="rest-rating" 
-                    style={{backgroundColor : `#${rest.user_rating.rating_color}`,width: 'fit-content'}}>
-                    {rest['user_rating']['aggregate_rating']}</p>
-                    <h3 className="h3">Please select your booking details</h3>
-          </div>
+        
+          <h3 className="h3">Please select your booking details</h3>
             <div className="book-table-container">
         <form className="book-table-form">
         {/* <MuiPickersUtilsProvider> */}
@@ -133,13 +151,13 @@ class BookTable extends React.Component {
             style={{margin: "auto 8px"}}
             name = "date"
             margin="normal"
-            label="Date picker"
+            label="Date"
             value={this.state.selectedDate}
             onChange={this.handleDateChange}
           />
           <TimePicker
             margin="normal"
-            label="Time picker"
+            label="Time"
             name="session"
             value={this.state.session}
             onChange={this.handleTimeChange}
@@ -147,6 +165,8 @@ class BookTable extends React.Component {
           <FormControl style={{margin : "16px"}}className={classes.formControl}>
           <InputLabel htmlFor="demo-controlled-open-select">Guests</InputLabel>
           <Select
+            className="test-select"
+            style={{color: 'white'}}
             open={this.state.open}
             onClose={this.handleClose}
             onOpen={this.handleOpen}
@@ -174,11 +194,12 @@ class BookTable extends React.Component {
       </MuiPickersUtilsProvider>
         
       </form>
-      <div className="flex">
+      <div className="fle" style={{position: 'center', width : '50%'}}>
         <button onClick={this.handleConfirm} className="booking-confirm">Book a Table</button>
       </div>
-      
     </div>
+    <Snackbar handleSnackClose={this.handleSnackClose}show={this.state.Snackbar} message={"Your Booking confirmed...!"}/> 
+        </div>
       </Card>
     );
   }
