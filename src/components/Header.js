@@ -98,6 +98,7 @@ class Header extends React.Component{
         event.preventDefault();
        this.props.handleSearch(this.state.searchText);
        this.setState({searchText : ""})
+       
     }
     componentDidMount(){
   
@@ -109,7 +110,7 @@ class Header extends React.Component{
       <AppBar position="static" style={{backgroundColor: "#cb202d"}}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            <NavLink to="/">{this.props.title}</NavLink>
+            <NavLink to="/">{`Zomato`}</NavLink>
           </Typography>
           <div className={classes.grow} />
           <div className={classes.search}>

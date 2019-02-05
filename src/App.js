@@ -11,10 +11,8 @@ import BookTable from './components/BookTable';
 import Footer from './components/Footer';
 import firebase from 'firebase';
 
-firebase.initializeApp({
-  apiKey : `AIzaSyAHhjLb5eQBxPJQqQhnVGX1GP9jORRbHC4`,
-  authDomain : `zomato-project-71102.firebaseapp.com`
-})
+import { connect } from 'react-redux'
+import { fetchTrending, fetchSearchResults, getUserInfo} from './store/actions';
 
 class App extends Component {
   constructor(props) {
@@ -22,10 +20,6 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       title: "Zomato",
-      trending: [],
-      isTrending: false,
-      searchResults: [],
-      isSearch: false,
       email: "",
       user: "",
       booked: ''
@@ -38,70 +32,22 @@ class App extends Component {
       signInSuccessWithAuthResult: () => false
     }
   }
-  getTrending = () => {
-    RestAPI.getTrending()
-      .then(res => res.json())
-      .then(rest => {
-        this.setState({
-          trending: rest,
-          isTrending: true
-        })
-      })
-  }
   componentDidMount = () => {
-    this.getTrending();
+    this.props.fetchTrending()
+    
     firebase.auth().onAuthStateChanged(currentUser => {
       this.setState({
         isLoggedIn: !!currentUser,
         email: currentUser.email
       })
-      RestAPI.getUser(currentUser.email)
-        .then(res => res.json())
-        .then(thisUser => {
-          if (!thisUser) {
-            let details = {
-              displayName: currentUser.displayName,
-              email: currentUser.email,
-              phoneNumber: currentUser.phoneNumber,
-              photoURL: currentUser.photoURL,
-              paymentMode : ""
-            }
-            RestAPI.userSignup(currentUser.email, details)
-              .then(res => this.setState({
-                user: thisUser
-              }))
-          } else this.setState({
-            user: thisUser
-          })
-        })
+      this.props.getUserInfo(currentUser)
     })
   }
-  home = () => this.setState({
-    isSearch: false
-  })
 
-  getRestaurant = rest => this.setState({
-    booked: rest
-  })
+  bookHandle = rest => this.setState({ booked: rest })
 
-  handleSearch = (query) => {
-    if (query) {
-      this.setState({
-        isTrending: false
-      })
-      RestAPI.getSearchResults(query)
-        .then(res => res.json())
-        .then(rest => this.setState({
-          searchResults: rest,
-          isSearch: true
-        }))
-    } else this.setState({
-      isTrending: true
-    })
-  }
-  getUser = (email) => {
+  handleSearch = (query) => { if(query) this.props.fetchSearchResults(query) }
 
-  }
   signOut = () => {
     firebase.auth().signOut();
     this.setState({
@@ -109,13 +55,11 @@ class App extends Component {
     })
   }
   render() {
-    let restaurants = !this.state.isSearch ? this.state.trending : this.state.searchResults;
-    let heading = !this.state.isSearch ? "Trending this week...." : `Search results.... found ${this.state.searchResults.length} restaurants`
+   //console.log(this.props)
     return (
       <BrowserRouter>
         <div>
           <Header 
-            title={this.state.title} 
             uiConfig={this.uiConfig} 
             isLoggedIn={this.state.isLoggedIn} 
             handleSearch={this.handleSearch} 
@@ -125,12 +69,9 @@ class App extends Component {
           <div className="content">
           <NavContent home={this.home}/>
           <Switch>
-            <Route path="/" render={()=><Home  
-                props={restaurants} 
-                heading={heading} 
-                bookHandle={this.getRestaurant}/>} exact/>
-            <Route path="/user" render={()=><Profile  user={this.state.user}/>} exact/>
-            <Route path="/bookings" render={()=><Booking  email={this.state.user.email}/>}exact/>
+            <Route path="/" render={()=><Home bookHandle={this.bookHandle}/>} exact/>
+            <Route path="/user" render={()=><Profile/>} exact/>
+            <Route path="/bookings" render={()=><Booking/>}exact/>
             <Route path="/restaurants?book" render={() => <BookTable rest={this.state.booked} email={this.state.user.email}/>} exact/>
           </Switch>
         </div>
@@ -140,5 +81,14 @@ class App extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  state
+})
+const mapDispatchToProps = dispatch => ({
+  fetchTrending: () => dispatch(fetchTrending()),
+  fetchSearchResults : (query) => dispatch(fetchSearchResults(query)),
+  getUserInfo : (user) => dispatch(getUserInfo(user))
+})
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+

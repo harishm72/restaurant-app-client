@@ -1,9 +1,3 @@
-const userId = "5c49a6b8251c5c0f321b1a2a";
-const userName = "harish"
-
-let getTrending = () =>{
-    return fetch(`http://localhost:4000/api/restaurants/trending`)
-}
 
 let getRestaurant  = (id) =>{
    return fetch(`http://localhost:4000/api/restaurants/${id}` , {
@@ -59,10 +53,6 @@ let bookTable = (email, post) =>{
       }
    )
 }
-
-let getSearchResults = (query) =>{
-   return fetch(`http://localhost:4000/api/restaurants/search/${query}`)
-}
 let getUser = (email) =>{
    return fetch(`http://localhost:4000/api/user/${email}`, {
       headers : {
@@ -73,6 +63,6 @@ let getUser = (email) =>{
       })
 }
 
-module.exports  = {getTrending, getRestaurant, updateProfile, userSignup, 
-                  getBookings, getSearchResults, 
+module.exports  = { getRestaurant, updateProfile, userSignup, 
+                  getBookings, 
                   getUser, bookTable}

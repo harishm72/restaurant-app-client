@@ -69,8 +69,8 @@ class BookTable extends React.Component {
             guests : "2 guests",
             session : new Date(),
             age: '',
-           open: false,
-           Snackbar : false
+            open: false,
+            Snackbar : false
         }
     }
   handleConfirm = () => {
@@ -89,29 +89,17 @@ class BookTable extends React.Component {
   handleChange = (event) =>{
       this.setState({ [event.target.name] : event.target.value})
   }
-  handleTimeChange = date => {
-    this.setState({ session: date });
-    //console.log(date)
-  };
-  handleDateChange = date => {
-    this.setState({ selectedDate: date });
-    //console.log(date)
-  };
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-  handleSnackClose = () => {
-    this.setState({ Snackbar: false });
-  }
+  handleTimeChange = date => {this.setState({ session: date }); };
+  handleDateChange = date => {this.setState({ selectedDate: date }); };
+  handleClose = () => {this.setState({ open: false });};
+  handleOpen = () => {this.setState({ open: true });};
+  handleSnackClose = () => {this.setState({ Snackbar: false });}
+  
   render() {
     const { classes, rest } = this.props;
     return (
       <Card className={`book-table-card ${classes.card}`}>
-       <div class="rest-detail-header">
+       <div className="rest-detail-header">
        <CardHeader  title={rest.name}/>
         <div className="flex" style={{justifyContent : "space-between"}}>
                 <div>

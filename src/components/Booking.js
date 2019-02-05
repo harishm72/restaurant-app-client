@@ -1,25 +1,14 @@
 import React from 'react';
 import RestAPI from './RestAPI';
+import { connect } from 'react-redux'
 
 class Booking extends React.Component {
-        constructor(props){
-            super(props);
-            this.state = {
-                bookings : []
-            }
-        }
-        componentDidMount(){
-            RestAPI.getBookings(this.props.email)
-            .then(res => res.json())
-            .then(allBookings => this.setState({bookings : allBookings}))
-            .catch(err => window.location.href = "/")
-        }
     render(){
-        if(this.state.bookings){ 
+        if(this.props.bookings){ 
         return <div className="user-bookings">
                     <h5>My bookings......</h5>
                     <div className="bookings-list">
-                    {this.state.bookings.map((booking,key) => <Booked rest={booking} key={key}/>)}
+                    {this.props.bookings.map((booking,key) => <Booked rest={booking} key={key}/>)}
                     </div>
                    
                 </div>
@@ -67,4 +56,7 @@ class Booked extends React.Component{
      )   
     }
 }
-export default Booking;
+const mapStateToProps = state => ({
+    bookings : state.userDetails.user.bookings
+  })
+export default connect(mapStateToProps)(Booking);

@@ -5,6 +5,8 @@ import RestAPI from './RestAPI';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import Snackbar from './Snackbar';
+import { connect } from 'react-redux'
+
 class Profile extends React.Component{
     constructor(props){
         super(props)
@@ -17,7 +19,6 @@ class Profile extends React.Component{
         }
     }
     componentDidMount = () =>{
-        //console.log(this.props)
         const {displayName, email, phoneNumber, paymentMode} = this.props.user
         this.setState({
             displayName : displayName,
@@ -105,4 +106,7 @@ class Profile extends React.Component{
         </div>
     }
 }
-export default Profile;
+const mapStateToProps = state => ({
+    user : state.userDetails.user
+  })
+export default connect(mapStateToProps)(Profile);
