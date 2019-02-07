@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
-import  {restaurants, userDetails} from './Reducer'
+import  {restaurants} from './Restaurants'
+import  {userDetails} from './Userdetails'
+import  {booking} from './Booking'
 export default combineReducers({
   restaurants,
-  userDetails
+  userDetails,
+  booking
 })

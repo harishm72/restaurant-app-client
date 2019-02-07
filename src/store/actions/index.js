@@ -1,7 +1,5 @@
-export const addComment = (comment, id) => ({
-  type: 'ADD_COMMENT',
-  id,
-  comment
+export const signOut = () => ({
+  type: 'SIGN_OUT',
 })
 export const fetchTrending = () => dispatch => {
   fetch(`http://localhost:4000/api/restaurants/trending`)

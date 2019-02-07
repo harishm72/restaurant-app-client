@@ -19,13 +19,19 @@ class Profile extends React.Component{
         }
     }
     componentDidMount = () =>{
-        const {displayName, email, phoneNumber, paymentMode} = this.props.user
+        try{
+            const {displayName, email, phoneNumber, paymentMode} = this.props.user
         this.setState({
             displayName : displayName,
             email : email,
             phoneNumber : phoneNumber,
             paymentMode : paymentMode,
         })
+        }
+        catch(err){
+
+        }
+        
     }
     handleChange = event =>  this.setState({[event.target.name] : event.target.value})
     handleSnackClose = () => {
@@ -57,7 +63,7 @@ class Profile extends React.Component{
           });
           if(!this.props.user){
               return <div>
-                  {window.location.href = "/"}
+                  Login / sign up to view this section.....
               </div>
           }
         return <div className="user-profile">

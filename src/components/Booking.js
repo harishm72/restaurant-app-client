@@ -4,11 +4,14 @@ import { connect } from 'react-redux'
 
 class Booking extends React.Component {
     render(){
-        if(this.props.bookings){ 
+        if(!this.props.bookings){
+            return <div>Login / SignUp to view this section</div>
+        }
+        if(this.props.bookings.bookings){ 
         return <div className="user-bookings">
                     <h5>My bookings......</h5>
                     <div className="bookings-list">
-                    {this.props.bookings.map((booking,key) => <Booked rest={booking} key={key}/>)}
+                    {this.props.bookings.bookings.map((booking,key) => <Booked rest={booking} key={key}/>)}
                     </div>
                    
                 </div>
@@ -57,6 +60,6 @@ class Booked extends React.Component{
     }
 }
 const mapStateToProps = state => ({
-    bookings : state.userDetails.user.bookings
+    bookings : state.userDetails.user
   })
 export default connect(mapStateToProps)(Booking);

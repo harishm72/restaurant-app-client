@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import './styles/App.css';
-import RestAPI from './components/RestAPI'
 import Header from './components/Header';
 import NavContent from './components/NavContent';
 import Home from './components/Home';
@@ -12,7 +11,7 @@ import Footer from './components/Footer';
 import firebase from 'firebase';
 
 import { connect } from 'react-redux'
-import { fetchTrending, fetchSearchResults, getUserInfo} from './store/actions';
+import { fetchTrending, fetchSearchResults, getUserInfo, signOut} from './store/actions';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +52,8 @@ class App extends Component {
     this.setState({
       isLoggedIn: false
     })
+    this.props.signOut()
+    window.location.replace("/")
   }
   render() {
    //console.log(this.props)
@@ -87,7 +88,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchTrending: () => dispatch(fetchTrending()),
   fetchSearchResults : (query) => dispatch(fetchSearchResults(query)),
-  getUserInfo : (user) => dispatch(getUserInfo(user))
+  getUserInfo : (user) => dispatch(getUserInfo(user)),
+  signOut : () => dispatch(signOut())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
