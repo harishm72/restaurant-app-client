@@ -12,7 +12,12 @@ export const userDetails = (state = {}, action) => {
                 ...state,
                 user: {}
             }
-
+        case 'BOOKING_CONFIRM':
+        console.log(state)
+        return {
+            ...state,
+            bookings : [...state.bookings, action.post] 
+        }
         default:
             return state;
     }

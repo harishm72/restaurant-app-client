@@ -1,6 +1,7 @@
 export const signOut = () => ({
   type: 'SIGN_OUT',
 })
+
 export const fetchTrending = () => dispatch => {
   fetch(`http://localhost:4000/api/restaurants/trending`)
     .then(res => res.json())
@@ -22,6 +23,7 @@ export const fetchSearchResults = (query) => dispatch => {
       })
     );
 };
+
 export const getRestaurant = (id) => dispatch => {
   return fetch(`http://localhost:4000/api/restaurants/${id}`, {
       headers: {
@@ -33,7 +35,8 @@ export const getRestaurant = (id) => dispatch => {
       type: 'GET_RESTAURANT',
       restaurant
     }))
-}
+};
+
 export const getUserInfo = (currentUser) => dispatch => {
   return fetch(`http://localhost:4000/api/user/${currentUser.email}`, {
       headers: {
@@ -68,8 +71,25 @@ export const getUserInfo = (currentUser) => dispatch => {
         user: thisUser
       })
     })
-}
+};
 
-export const bookTable = (email, id) => dispatch =>{
-  return fetch(``)
-}
+export const bookTableView = (email, rest) =>({
+    type : 'BOOK_TABLE',
+    email,
+    rest
+})
+
+export const bookTableConfirm = (email, post) => dispatch =>{
+  return fetch(`http://localhost:4000/api/bookings`, {
+    headers : {
+       'Content-Type': 'application/json',
+       'Accept': 'application/json',
+       "email" : email
+       },
+    method : 'POST',
+    body : JSON.stringify(post)
+    }).then(dispatch({
+      type : "BOOKING_CONFIRM",
+      rest : post
+    }))
+} 

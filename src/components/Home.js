@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 class Home extends Component {
     render() {
-        const { trends, isSearch, bookHandle, results} = this.props
+        const { trends, isSearch, results} = this.props
         let rests = isSearch ? results : trends
         let heading = isSearch ? `found ${results.length} restaurants` : `Trending this week...`
         if (rests) {
@@ -14,7 +14,7 @@ class Home extends Component {
                     <Appcontent
                         restaurants={rests}
                         title={heading}
-                        bookHandle={bookHandle} />
+                    />
                 </div>
             )
         }

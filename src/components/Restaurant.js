@@ -8,6 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import {NavLink} from 'react-router-dom';
+import { connect } from 'react-redux'
+
+import { bookTableView } from '../store/actions'
 
 const styles = theme => ({
 
@@ -43,8 +46,7 @@ const styles = theme => ({
 class Restaurant extends React.Component {
 
   handleClick = (event) => {
-    this.props.bookHandle(this.props.rest)
-    console.log("clicked  " + this.props.rest._id)
+    this.props.bookTableView(this.props.email.email, this.props.rest)
   };
 
   render() {
@@ -94,5 +96,10 @@ class Restaurant extends React.Component {
 Restaurant.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(Restaurant);
+const mapStateToProps = state => ({
+  email : state.userDetails.user
+})
+const mapDispatchToProps = dispatch => ({
+  bookTableView : (email, rest) => dispatch(bookTableView(email, rest))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Restaurant));

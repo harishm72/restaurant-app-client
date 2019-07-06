@@ -16,6 +16,9 @@ import DateFnsUtils from '@date-io/date-fns';
 import Grid from '@material-ui/core/Grid';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import  Snackbar from './Snackbar';
+
+import {connect} from 'react-redux'
+import { bookTableConfirm} from '../store/actions'
 const styles = theme => ({
 
   grid: {
@@ -68,7 +71,6 @@ class BookTable extends React.Component {
             selectedDate: new Date(),
             guests : "2 guests",
             session : new Date(),
-            age: '',
             open: false,
             Snackbar : false
         }
@@ -83,7 +85,7 @@ class BookTable extends React.Component {
           session : time.toLocaleTimeString(),
           id : this.props.rest._id,
       }
-      RestAPI.bookTable(this.props.email, post)
+      this.props.bookTableConfirm(this.props.email, post)
       this.setState({Snackbar : true})
   }
   handleChange = (event) =>{
@@ -97,6 +99,7 @@ class BookTable extends React.Component {
   
   render() {
     const { classes, rest } = this.props;
+    console.log(this.props)
     return (
       <Card className={`book-table-card ${classes.card}`}>
        <div className="rest-detail-header">
@@ -132,7 +135,6 @@ class BookTable extends React.Component {
           <h3 className="h3">Please select your booking details</h3>
             <div className="book-table-container">
         <form className="book-table-form">
-        {/* <MuiPickersUtilsProvider> */}
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Grid container className={classes.grid} justify="space-around">
           <DatePicker
@@ -166,7 +168,7 @@ class BookTable extends React.Component {
             }}
           >
             <MenuItem value={"1 guest"}>One</MenuItem>
-            <MenuItem value={"2 guests"}>Two</MenuItem>
+            <MenuItem value={"2 guests"}>Two</MenuItem>import { connect } from 'react-redux'
             <MenuItem value={"3 guests"}>Three</MenuItem>
             <MenuItem value={"4 guests"}>Four</MenuItem>
             <MenuItem value={"5 guests"}>Five</MenuItem>
@@ -192,4 +194,12 @@ class BookTable extends React.Component {
     );
   }
 }
-export default withStyles(styles)(BookTable);
+
+const mapStateToProps = state => ({
+  rest : state.booking.rest,
+  email : state.booking.email
+})
+const mapDispatchToProps = dispatch => ({
+  bookTableConfirm : (email, post) => dispatch(bookTableConfirm(email, post))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(BookTable));

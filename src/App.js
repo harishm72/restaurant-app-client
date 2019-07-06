@@ -43,8 +43,6 @@ class App extends Component {
     })
   }
 
-  bookHandle = rest => this.setState({ booked: rest })
-
   handleSearch = (query) => { if(query) this.props.fetchSearchResults(query) }
 
   signOut = () => {
@@ -70,10 +68,10 @@ class App extends Component {
           <div className="content">
           <NavContent home={this.home}/>
           <Switch>
-            <Route path="/" render={()=><Home bookHandle={this.bookHandle}/>} exact/>
+            <Route path="/" render={()=><Home/>} exact/>
             <Route path="/user" render={()=><Profile/>} exact/>
             <Route path="/bookings" render={()=><Booking/>}exact/>
-            <Route path="/restaurants?book" render={() => <BookTable rest={this.state.booked} email={this.state.user.email}/>} exact/>
+            <Route path="/restaurants?book" render={() => <BookTable/>} exact/>
           </Switch>
         </div>
         <Footer/>
