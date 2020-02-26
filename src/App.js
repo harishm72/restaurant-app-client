@@ -20,7 +20,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: true,
       title: "Zomato",
       trending: [],
       isTrending: false,
@@ -52,7 +52,7 @@ class App extends Component {
     this.getTrending();
     firebase.auth().onAuthStateChanged(currentUser => {
       this.setState({
-        isLoggedIn: !!currentUser,
+        isLoggedIn: true,
         email: currentUser.email
       })
       RestAPI.getUser(currentUser.email)
@@ -109,6 +109,7 @@ class App extends Component {
     })
   }
   render() {
+    console.log("Rendered")
     let restaurants = !this.state.isSearch ? this.state.trending : this.state.searchResults;
     let heading = !this.state.isSearch ? "Trending this week...." : `Search results.... found ${this.state.searchResults.length} restaurants`
     return (
